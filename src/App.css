@@ -1,21 +1,51 @@
 body {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #0f2e6d, #448eb2);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 1s ease;
 }
 
 .wrapper {
+  border-radius: 2rem;
+  padding: 2rem;
+  min-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.wrapper-loading {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
   padding: 2rem;
   min-width: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
+  opacity: 0;
+}
+
+.theme-switch-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
   transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.theme-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 .city {

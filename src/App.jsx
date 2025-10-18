@@ -10,6 +10,8 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [weatherColor, setWeatherColor] = useState("rgba(255, 255, 255, 0.2)");
+  const [isDark, setIsDark] = useState(false);
 
   const fetchWeatherData = async cityName => {
     try {
@@ -37,19 +39,74 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    fetchWeatherData(city);
-  }, [city]);
-
   function handleSearch(e) {
     e.preventDefault();
     fetchWeatherData(searchInput);
   }
 
-  if (loading) return <div className="wrapper">Loading...</div>;
+  function getWrapperGradient(tempC, condition) {
+    const main = condition?.toLowerCase() || "";
+
+    if (main.includes("snow")) {
+      return "linear-gradient(to bottom right, #E0EAFC, #CFDEF3)";
+    }
+    if (main.includes("rain" || "thunderstorm")) {
+      return "linear-gradient(to bottom right, #4B79A1, #283E51)";
+    }
+    if (main.includes("cloud")) {
+      return "linear-gradient(to bottom right, #757F9A, #D7DDE8)";
+    }
+    if (main.includes("clear")) {
+      if (tempC > 25) return "linear-gradient(to bottom right, #F7971E, #FFD200)";
+      else return "linear-gradient(to bottom right, #56CCF2, #2F80ED)";
+    }
+
+    // fallback by temperature
+    switch (true) {
+      case tempC <= -10:
+        return "linear-gradient(to bottom right, #001F3F, #003366)";
+      case tempC <= 0:
+        return "linear-gradient(to bottom right, #3366FF, #66CCFF)";
+      case tempC <= 10:
+        return "linear-gradient(to bottom right, #4B79A1, #283E51)";
+      case tempC <= 20:
+        return "linear-gradient(to bottom right, #56CCF2, #2F80ED)";
+      case tempC <= 30:
+        return "linear-gradient(to bottom right, #FFB75E, #ED8F03)";
+      default:
+        return "linear-gradient(to bottom right, #FF512F, #DD2476)";
+    }
+  }
+
+  function toggleDark() {
+    setIsDark(!isDark);
+  }
+
+  useEffect(() => {
+    fetchWeatherData(city);
+  }, [city]);
+
+  useEffect(() => {
+    if (weatherData?.main?.temp && weatherData.weather?.[0]) {
+      const tempC = Math.round((weatherData.main.temp - 32) / 1.8);
+      const condition = weatherData.weather[0].main;
+      setWeatherColor(getWrapperGradient(tempC, condition));
+    }
+  }, [weatherData]);
+
+  useEffect(() => {
+    document.body.style.background = isDark
+      ? "linear-gradient(to bottom right, #19004bff, #000207ff)"
+      : "linear-gradient(to bottom right, #4abfe0ff, #3d5ec0ff)";
+  }, [isDark]);
+
+  if (loading) return <div className="wrapper-loading">Loading...</div>;
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={{ background: weatherColor }}>
+      <button onClick={toggleDark} className="theme-switch-btn">
+        Toggle Light
+      </button>
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"

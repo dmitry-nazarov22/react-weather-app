@@ -1,7 +1,7 @@
 # 🌤️ Weather App
 
-A minimalistic weather forecast app built with **React + Vite**.  
-This project was created for learning purposes — to practice working with **APIs**, **React hooks**, and writing clean, readable code using **ESLint** and **Prettier**.
+A minimalistic and dynamic weather forecast app built with **React + Vite**.  
+This project was created for learning purposes — to practice working with **APIs**, **React hooks**, and building interactive UI with clean, maintainable code using **ESLint** and **Prettier**.
 
 ---
 
@@ -10,6 +10,8 @@ This project was created for learning purposes — to practice working with **AP
 - 🔍 Search weather by city name
 - 🌡️ Display current temperature, humidity, and wind speed
 - 📅 5-day forecast with weather icons
+- 🌈 Dynamic wrapper background that changes color based on temperature and conditions
+- 🌓 Dark & light theme toggle
 - ⚠️ Error handling and loading states
 - 📲 Simple and modern UI built with pure CSS
 
@@ -17,9 +19,10 @@ This project was created for learning purposes — to practice working with **AP
 
 ## 🚀 Future Improvements
 
+- [ ] 🎞️ Animated backgrounds (rain, sun rays, snow, etc.)
 - [ ] 🔄 Celsius ↔ Fahrenheit toggle
-- [ ] 📍 Detect location via Geolocation API
-- [ ] 🧭 Responsive design
+- [ ] 📍 Detect user location via Geolocation API
+- [ ] 🧭 Fully responsive design
 - [ ] 🌀 Custom loading animation
 
 ---
@@ -33,10 +36,35 @@ This project was created for learning purposes — to practice working with **AP
 
 ---
 
+## 🧠 Key Functions
+
+### `getWrapperGradient(tempC, condition)`
+
+Dynamically sets the background gradient of the weather card based on temperature and condition:
+
+- ☀️ Clear weather — blue or yellow tones depending on temperature
+- 🌧️ Rain — dark blue tones
+- 🌨️ Snow — light, cold gradient
+- ☁️ Cloudy — neutral gray/blue tone
+- 🌡️ Fallback gradients based on temperature if condition is missing
+
+### `toggleDark()`
+
+Toggles between **dark** and **light** mode by updating the body background gradient.
+
+---
+
 ## 📸 Screenshots & Demo
 
 **Live demo GIF:**  
 ![Demo](./screenshots/demo.gif)
+
+---
+
+**Switching between dark and light theme GIF:**  
+![Demo](./screenshots/light-dark-demo.gif)
+
+---
 
 ## ⚙️ Getting Started
 
